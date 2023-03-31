@@ -1,2 +1,4 @@
 .memo
 .env
+db.sqlite
+json.sqlite
