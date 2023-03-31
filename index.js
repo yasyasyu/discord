@@ -50,33 +50,43 @@ client.on('messageCreate', async (message) => {
 	if (message.author.bot) return;
 	const [command, ...args] = message.content.slice(prefix.length).split(/\s+/)
 
-	//balance
-	if (command === `balance` || command === `bal`) {
-		balance(message);
-	}
-	//deposit
-	if (command === `deposit` || command === `dep`) {
-		deposit(message);
-	}
-	//withdraw
-	if (command === `withdraw` || command === `with`) {
-		withdraw(message);
-	}
-	//ping
-	if (command === `ping`) {
-		ping(message);
-	}
-	//work
-	if (command === `work`) {
-		work(message);
-	}
-	//give
-	if (command === `send`) {
-		send(message);
-	}
-	//coinflip
-	if (command === `coinflip`) {
-		coinflip(message);
+
+	switch (command) {
+		case `balance`:
+		case `bal`:
+			balance(message);
+			break
+
+		case `deposit`:
+		case `dep`:
+			deposit(message);
+			break
+
+		case `withdraw`:
+		case `with`:
+			withdraw(message);
+			break
+
+		case `ping`:
+			ping(message);
+			break
+
+		case `work`:
+			work(message);
+			break
+
+		case `send`:
+			send(message);
+			break
+
+		case `coinflip`:
+			coinflip(message);
+			break
+		default:
+			message.reply(
+				`対応していないcommandです。`
+			);
+			break
 	}
 })
 
