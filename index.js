@@ -80,7 +80,7 @@ client.on('messageCreate', async (message) => {
 			break
 
 		case `coinflip`:
-			coinflip(message);
+			CoinFlip(message);
 			break
 		default:
 			message.reply(
@@ -168,10 +168,10 @@ async function work(message) {
 	const money = (await moneys.get(message.author.id)) || { cash: 5000, bank: 0 };
 	let cd = await cmdCD.checkCoolDown(message.author.id, "cmd-work");
 	if (!cd.res.ready) return message.reply(`${"```"}js\n＊🤖そのコマンドは一時間のクールダウンの後に使えます🚀\n残り${(cd.res.rem / 1000 / 60).toFixed(1)}分${"```"}`);
-	var randomwork = 1000 + Math.floor(Math.random() * 5000);
-	money.cash += randomwork;
+	var randomWork = 1000 + Math.floor(Math.random() * 5000);
+	money.cash += randomWork;
 	message.reply(
-		`${"```"}＊地下労働して${randomwork}円を手に入れた！💸${"```"}`
+		`${"```"}＊地下労働して${randomWork}円を手に入れた！💸${"```"}`
 	);
 	cmdCD.addCoolDown(message.author.id, 3600000, "cmd-work");
 	moneys.set(message.author.id, money)
@@ -184,18 +184,18 @@ async function send(message) {
 	const [amount] = args.map(str => Number(str)); console.log(amount);
 	if (message.mentions.members.size !== 1) return message.channel.send('メンバーを1人指定してください')
 	const target = await message.mentions.members.first()
-	const targetmoney = (await moneys.get(target.id)) || { cash: 5000, bank: 0 };
+	const targetMoney = (await moneys.get(target.id)) || { cash: 5000, bank: 0 };
 	if (Number.isNaN(amount)) return message.reply('相手に渡す金額を指定してください')
 	if (money.cash < amount) return message.reply('所持金足りない')
 	money.cash -= amount;
-	targetmoney.cash += amount;
+	targetMoney.cash += amount;
 
 	message.reply(`${amount}円を${target}に送りました`)
 	moneys.set(message.author.id, money)
-	moneys.set(target.id, targetmoney)
+	moneys.set(target.id, targetMoney)
 }
 
-async function coinflip(message) {
+async function CoinFlip(message) {
 	const money = (await moneys.get(message.author.id)) || { cash: 5000, bank: 0 };
 	const [command, ...args] = message.content.slice(prefix.length).split(/\s+/)
 
